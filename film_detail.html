@@ -768,102 +768,42 @@
 </head>
 <body>
     <header>
-        <h1 class="glow">{{ film.name }}</h1>
-    </header>
+  <h1 class="glow" id="filmTitle">Завантаження...</h1>
+</header>
 
-    <div class="container">
-        <div class="film-details">
-            <img src="{{ film.poster }}" alt="{{ film.name }}">
-            <div class="duration-bar">
-                <div class="duration-progress"></div>
-            </div>
-        </div>
+<div class="container">
+  <div class="film-details">
+    <img id="filmPoster" src="" alt="">
+  </div>
+  <div class="film-info">
+    <h2>Деталі фільму</h2>
+    <table>
+      <tr><th>Рік випуску</th><td id="filmYear"></td></tr>
+      <tr><th>Країна</th><td id="filmCountry"></td></tr>
+      <tr><th>Жанр</th><td id="filmGenre"></td></tr>
+      <tr><th>Тривалість</th><td id="filmDuration"></td></tr>
+    </table>
+  </div>
+</div>
 
-        <div class="film-info">
-            <h2>Деталі фільму</h2>
-            <table>
-                <tr>
-                    <th>Рік випуску</th>
-                    <td>{{ film.year.strftime('%Y') }}</td>
-                </tr>
-                <tr>
-                    <th>Країна</th>
-                    <td>{{ film.country }}</td>
-                </tr>
-                <tr>
-                    <th>Жанр</th>
-                    <td>{{ film.genre }}</td>
-                </tr>
-                <tr>
-                    <th>Тривалість</th>
-                    <td>{{ film.duration }}</td>
-                </tr>
-                {% if film.director %}
-                <tr>
-                    <th>Режисер</th>
-                    <td>{{ film.director }}</td>
-                </tr>
-                {% endif %}
-                {% if film.actors %}
-                <tr>
-                    <th>Актори</th>
-                    <td>{{ film.actors }}</td>
-                </tr>
-                {% endif %}
-                {% if film.rating %}
-                <tr>
-                    <th>Рейтинг</th>
-                    <td>{{ film.rating }}/10 ⭐</td>
-                </tr>
-                {% endif %}
-            </table>
-        </div>
-    </div>
+<div class="description-container">
+  <h2>Синопсис</h2>
+  <p id="filmDescription"></p>
+</div>
 
-    <div class="description-container">
-        <h2>Синопсис</h2>
-        <p>{{ film.description }}</p>
-    </div>
+<div class="video-container">
+  <div class="video-wrapper">
+    <video id="filmVideo" controls poster="">
+      <source id="filmVideoSrc" src="" type="video/mp4">
+      Ваш браузер не підтримує відео тег.
+    </video>
+  </div>
+  <a href="./films.html" class="back-button">Назад до списку фільмів</a>
+</div>
 
-    <div class="video-container">
-        <div class="video-section">
-            <h2>Перегляд фільму</h2>
-            <div class="video-wrapper" id="videoWrapper">
-                <div class="loading-indicator" id="loadingIndicator" style="display: none;"></div>
-                <div class="format-indicator">ВЕРТИКАЛЬНЕ ВІДЕО 9:16</div>
-                <video id="filmVideo" poster="{{ film.poster }}">
-                    <source src="../static/videod/{{ film.video_path }}" type="video/mp4">
-                    Ваш браузер не підтримує відео тег.
-                </video>
-                <div class="video-controls">
-                    <div class="video-progress" id="progressContainer">
-                        <div class="video-progress-bar" id="progressBar"></div>
-                    </div>
-                    <div class="video-buttons">
-                        <button class="video-btn" id="playBtn">▶️</button>
-                        <button class="video-btn" id="volumeBtn">🔊</button>
-                        <span class="video-time" id="timeDisplay">00:00 / 00:00</span>
-                        <button class="video-btn" id="fullscreenBtn">⛶</button>
-                    </div>
-                </div>
-            </div>
-            <div class="video-info">
-                <div class="video-quality">
-                    <span class="quality-badge">HD</span>
-                    <span class="video-size">Формат: 9:16</span>
-                </div>
-                <div class="video-size">
-                    Тривалість: {{ film.duration }}
-                </div>
-            </div>
-        </div>
-        <a href="/films" class="back-button">Назад до списку фільмів</a>
-    </div>
-
-    <footer>
-        <p>© 2024 Кінопортал. Всі права захищені.</p>
-    </footer>
-
+<footer>
+  <p>© 2024 Кінопортал. Всі права захищені.</p>
+</footer>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const video = document.getElementById('filmVideo');
@@ -875,7 +815,33 @@
             const fullscreenBtn = document.getElementById('fullscreenBtn');
             const videoWrapper = document.getElementById('videoWrapper');
             const loadingIndicator = document.getElementById('loadingIndicator');
+            const params = new URLSearchParams(window.location.search);
+            const filmId = parseInt(params.get('id'));
             let isMuted = false;
+            fetch('./films.json')
+  .then(res => res.json())
+  .then(films => {
+    const film = films.find(f => f.id === filmId);
+    if(!film){
+      document.getElementById('filmTitle').textContent = "Фільм не знайдено";
+      return;
+    }
+    document.getElementById('filmTitle').textContent = film.name;
+    document.getElementById('filmPoster').src = film.poster;
+    document.getElementById('filmPoster').alt = film.name;
+    document.getElementById('filmYear').textContent = film.year;
+    document.getElementById('filmCountry').textContent = film.country;
+    document.getElementById('filmGenre').textContent = film.genre;
+    document.getElementById('filmDuration').textContent = film.duration;
+    document.getElementById('filmDescription').textContent = film.description;
+
+    const video = document.getElementById('filmVideo');
+    const videoSrc = document.getElementById('filmVideoSrc');
+    videoSrc.src = `./static/videod/${film.video_path}`;
+    video.poster = film.poster;
+    video.load();
+  })
+  .catch(err => console.error('Помилка завантаження JSON:', err));
             function formatTime(seconds) {
                 const mins = Math.floor(seconds / 60);
                 const secs = Math.floor(seconds % 60);
