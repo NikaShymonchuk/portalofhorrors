@@ -469,199 +469,166 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
-            <ul class="nav-links">
-                <li><a href="/">Головна</a></li>
-                <li><a href="/films" class="active">Фільми</a></li>
-                <li><a href="/login">Логін</a></li>
-                <li><a href="/register">Реєстрація</a></li>
-                <li><a href="/review">Створити відгук</a></li>
-                <li><a href="/reviews">Відгуки</a></li>
-            </ul>
-        </div>
-    </nav>
-    <div class="page-header">
-        <h1>Колекція фільмів жахів</h1>
-        <p class="page-subtitle">Знайдіть найкращі фільми для вашого наступного нічного перегляду</p>
-    </div>
+<nav>
+  <div class="nav-container">
+    <ul class="nav-links">
+      <li><a href="./index.html">Головна</a></li>
+      <li><a href="./films.html" class="active">Фільми</a></li>
+      <li><a href="./login.html">Логін</a></li>
+      <li><a href="./register.html">Реєстрація</a></li>
+      <li><a href="./review.html">Створити відгук</a></li>
+      <li><a href="./reviews.html">Відгуки</a></li>
+    </ul>
+  </div>
+</nav>
 
-    <div class="search-section">
-        <div class="search-container">
-            <div class="search-row">
-                <div class="search-input-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input
-                        type="text"
-                        id="searchInput"
-                        placeholder="Введіть назву фільму для пошуку..."
-                    >
-                </div>
-                <button class="theme-toggle" id="darkModeToggle" title="Змінити тему">
-                    <i class="fas fa-moon"></i>
-                </button>
-            </div>
-            <div class="filters-row">
-                <div class="filter-group">
-                    <label class="filter-label">
-                        <i class="fas fa-globe"></i> Країна виробництва
-                    </label>
-                    <select id="filterCountry">
-                        <option value="">Всі країни</option>
-                        <option value="USA">США</option>
-                        <option value="UK">Великобританія</option>
-                        <option value="Japan">Японія</option>
-                        <option value="Ukraine">Україна</option>
-                        <option value="Korea">Корея</option>
-                        <option value="Germany">Німеччина</option>
-                        <option value="France">Франція</option>
-                    </select>
-                </div>
-            </div>
-            <div class="actions-row">
-                <div class="sort-buttons">
-                    <button class="action-button" id="sortYear">
-                        <i class="fas fa-calendar-alt"></i> Сортувати за роком
-                    </button>
-                    <button class="action-button" id="sortName">
-                        <i class="fas fa-sort-alpha-down"></i> Сортувати за назвою
-                    </button>
-                    <button class="action-button" id="resetFilter">
-                        <i class="fas fa-redo"></i> Скинути все
-                    </button>
-                </div>
-            </div>
-        </div>
+<div class="page-header">
+  <h1>Колекція фільмів жахів</h1>
+  <p class="page-subtitle">Знайдіть найкращі фільми для вашого наступного нічного перегляду</p>
+</div>
+
+<div class="search-section">
+  <div class="search-container">
+    <div class="search-row">
+      <div class="search-input-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="searchInput" placeholder="Введіть назву фільму для пошуку...">
+      </div>
+      <button class="theme-toggle" id="darkModeToggle" title="Змінити тему">
+        <i class="fas fa-moon"></i>
+      </button>
     </div>
-    <div class="films-container">
-        <div class="films-grid" id="movieList">
-            {% for film in films %}
-            <div class="film-card" data-title="{{ film.name }}" data-year="{{ film.year.strftime('%Y') }}" data-country="{{ film.country }}" data-description="{{ film.description }}">
-                <div class="film-poster">
-                    <a href="{{ url_for('film_detail', name=film.name) }}">
-                        <img src="{{ film.poster }}" alt="{{ film.name }}" loading="lazy"
-                             onerror="this.src='https://via.placeholder.com/300x400/1a1a1a/ff0000?text=No+Poster'">
-                    </a>
-                </div>
-                <div class="film-info">
-                    <h3 class="film-title">{{ film.name }}</h3>
-                    <div class="film-meta">
-                        <span><i class="fas fa-globe"></i> {{ film.country }}</span>
-                        <span><i class="fas fa-calendar"></i> {{ film.year.strftime('%Y') }}</span>
-                    </div>
-                    <p class="film-description">
-                        {{ film.description }}
-                    </p>
-                    <a href="{{ url_for('film_detail', name=film.name) }}" class="read-more">
-                        Детальніше <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+    <div class="filters-row">
+      <div class="filter-group">
+        <label class="filter-label"><i class="fas fa-globe"></i> Країна виробництва</label>
+        <select id="filterCountry">
+          <option value="">Всі країни</option>
+        </select>
+      </div>
     </div>
+    <div class="actions-row">
+      <div class="sort-buttons">
+        <button class="action-button" id="sortYear">
+          <i class="fas fa-calendar-alt"></i> Сортувати за роком
+        </button>
+        <button class="action-button" id="sortName">
+          <i class="fas fa-sort-alpha-down"></i> Сортувати за назвою
+        </button>
+        <button class="action-button" id="resetFilter">
+          <i class="fas fa-redo"></i> Скинути все
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="films-container">
+  <div class="films-grid" id="movieList">
+    <!-- Фільми будуть додані тут через JS -->
+  </div>
+</div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('searchInput');
-        const filterCountry = document.getElementById('filterCountry');
-        const sortYearBtn = document.getElementById('sortYear');
-        const sortNameBtn = document.getElementById('sortName');
-        const resetFilterBtn = document.getElementById('resetFilter');
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const movieList = document.getElementById('movieList');
-        const movies = movieList.getElementsByClassName('film-card');
-        function filterMovies() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            const country = filterCountry.value;
+const moviesContainer = document.getElementById('movieList');
+const searchInput = document.getElementById('searchInput');
+const filterCountry = document.getElementById('filterCountry');
+const sortYearBtn = document.getElementById('sortYear');
+const sortNameBtn = document.getElementById('sortName');
+const resetFilterBtn = document.getElementById('resetFilter');
+const darkModeToggle = document.getElementById('darkModeToggle');
 
-            Array.from(movies).forEach(movie => {
-                const title = movie.dataset.title.toLowerCase();
-                const movieCountry = movie.dataset.country;
+let filmsData = [];
 
-                let shouldShow = true;
+fetch('./films.json')
+  .then(res => res.json())
+  .then(films => {
+    filmsData = films;
+    populateCountryFilter(films);
+    renderFilms(films);
+  });
 
-                if (searchTerm && !title.includes(searchTerm)) {
-                    shouldShow = false;
-                }
+function populateCountryFilter(films) {
+  const countries = [...new Set(films.map(f => f.country))];
+  countries.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = c;
+    filterCountry.appendChild(opt);
+  });
+}
 
-                if (country && country !== movieCountry) {
-                    shouldShow = false;
-                }
+function renderFilms(films) {
+  moviesContainer.innerHTML = '';
+  films.forEach(film => {
+    const div = document.createElement('div');
+    div.className = 'film-card';
+    div.dataset.title = film.name;
+    div.dataset.year = film.year;
+    div.dataset.country = film.country;
+    div.dataset.description = film.description;
+    div.innerHTML = `
+      <div class="film-poster">
+        <a href="./film_detail.html?id=${film.id}">
+          <img src="${film.poster}" alt="${film.name}" loading="lazy"
+          onerror="this.src='https://via.placeholder.com/300x400/1a1a1a/ff0000?text=No+Poster'">
+        </a>
+      </div>
+      <div class="film-info">
+        <h3 class="film-title">${film.name}</h3>
+        <div class="film-meta">
+          <span><i class="fas fa-globe"></i> ${film.country}</span>
+          <span><i class="fas fa-calendar"></i> ${film.year}</span>
+        </div>
+        <p class="film-description">${film.description}</p>
+        <a href="./film_detail.html?id=${film.id}" class="read-more">
+          Детальніше <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    `;
+    moviesContainer.appendChild(div);
+  });
+}
 
-                movie.style.display = shouldShow ? 'block' : 'none';
-            });
-        }
+function filterAndRender() {
+  const searchTerm = searchInput.value.toLowerCase().trim();
+  const country = filterCountry.value;
+  const filtered = filmsData.filter(f => {
+    return (!searchTerm || f.name.toLowerCase().includes(searchTerm)) &&
+           (!country || f.country === country);
+  });
+  renderFilms(filtered);
+}
 
-        function sortMovies(criteria) {
-            const visibleMovies = Array.from(movies).filter(m => m.style.display !== 'none');
+function sortFilms(criteria) {
+  const sorted = [...filmsData];
+  if(criteria==='year') sorted.sort((a,b)=>b.year-a.year);
+  else sorted.sort((a,b)=>a.name.localeCompare(b.name,'uk'));
+  renderFilms(sorted);
+}
 
-            visibleMovies.sort((a, b) => {
-                if (criteria === 'year') {
-                    return parseInt(b.dataset.year) - parseInt(a.dataset.year); // новіші перші
-                } else {
-                    return a.dataset.title.localeCompare(b.dataset.title, 'uk');
-                }
-            });
+function resetFilters() {
+  searchInput.value = '';
+  filterCountry.selectedIndex = 0;
+  renderFilms(filmsData);
+}
 
-            visibleMovies.forEach(movie => {
-                movieList.appendChild(movie);
-            });
-        }
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  const icon = darkModeToggle.querySelector('i');
+  const isLight = document.body.classList.contains('light-mode');
+  icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
 
-        function resetFilters() {
-            searchInput.value = '';
-            filterCountry.selectedIndex = 0;
-            Array.from(movies).forEach(movie => {
-                movie.style.display = 'block';
-            });
-        }
+darkModeToggle.addEventListener('click', toggleTheme);
+searchInput.addEventListener('input', filterAndRender);
+filterCountry.addEventListener('change', filterAndRender);
+sortYearBtn.addEventListener('click',()=>sortFilms('year'));
+sortNameBtn.addEventListener('click',()=>sortFilms('name'));
+resetFilterBtn.addEventListener('click',resetFilters);
 
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const isLightMode = document.body.classList.contains('light-mode');
-            localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
-
-            const icon = darkModeToggle.querySelector('i');
-            icon.className = isLightMode ? 'fas fa-sun' : 'fas fa-moon';
-            darkModeToggle.setAttribute('title', isLightMode ? 'Увімкнути темний режим' : 'Увімкнути світлий режим');
-        }
-
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-mode');
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            darkModeToggle.setAttribute('title', 'Увімкнути темний режим');
-        }
-
-        searchInput.addEventListener('input', filterMovies);
-        filterCountry.addEventListener('change', filterMovies);
-
-        sortYearBtn.addEventListener('click', () => {
-            sortMovies('year');
-            sortYearBtn.classList.add('primary');
-            sortNameBtn.classList.remove('primary');
-        });
-
-        sortNameBtn.addEventListener('click', () => {
-            sortMovies('name');
-            sortNameBtn.classList.add('primary');
-            sortYearBtn.classList.remove('primary');
-        });
-
-        resetFilterBtn.addEventListener('click', resetFilters);
-        darkModeToggle.addEventListener('click', toggleTheme);
-
-        document.querySelectorAll('.action-button').forEach(btn => {
-            btn.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-            });
-
-            btn.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-    });
+const savedTheme = localStorage.getItem('theme');
+if(savedTheme==='light') document.body.classList.add('light-mode');
 </script>
 </body>
 </html>
